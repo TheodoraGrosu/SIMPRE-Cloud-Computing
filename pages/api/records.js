@@ -11,6 +11,7 @@ const getRecords = async () => {
 }
 
 const getRecord = async (id) => {
+	console.log(id);
     const collection = await getCollection(COLLECTION_NAME);
     return collection.findOne({_id: ObjectId.createFromHexString(id)});
 }
@@ -64,3 +65,4 @@ export default async function handler(req, res) {
 		return sendOk(res, result);
 	}
 }
+

@@ -1,64 +1,71 @@
-// js/components/InsertPage.jsx
+
 import { useEffect, useState } from "react"
 
-export default function InsertPage() {
-	const [expirationDateList, setExpirationDateList] = useState([{ expirationDate: "" }]);
-
-	const handleDateChange = (e, index) => {
-		const { name, value } = e.target;
-		const list = [...expirationDateList];
-		list[index][name] = value;
-		setExpirationDateList(list);
-	};
-
-	const handleDateRemove = (index) => {
-		const list = [...expirationDateList];
-		list.splice(index, 1);
-		setExpirationDateList(list);
-	};
+export default function EditPage({productId}) {
+    const [expirationDateList, setExpirationDateList] = useState([{ expirationDate: "" }]);
+    const [product, setProduct] = useState(null);
 
 
-	const insertRecord = (event) => {
-		event.preventDefault();
-		const denumire = document.getElementById("name").value;
-		const categorie = document.getElementById("category").value;
-		var date_expirare = document.getElementById("expirationDate").value;;
-		const pret = document.getElementById("price").value;
-		const link_imagine = document.getElementById("image").value;
-		for (let i = 1; i < expirationDateList.length; i++) {
-			date_expirare += "," + expirationDateList[i].expirationDate;
-			console.log(expirationDateList[i].expirationDate)
-		}
-		const data = {denumire, categorie, date_expirare, pret, link_imagine };
+    useEffect(() => {
+        async function fetchProduct() {
+            if (!productId) return;
+            const response = await fetch(`/api/records?id=${productId}`);
+            const data = await response.json();
+            setProduct(data.data);  // Important! Accesează `data.data` pentru a seta produsul
+        }
+
+        fetchProduct();
+    }, [productId]);
+    
+    const handleChange = (e) => {
+        const { id, value } = e.target;
+        setProduct(prev => ({ ...prev, [id]: value }));
+    };
 
 
-		fetch("/api/records", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(data),
-		}).then(() => {
-		   
-			window.location.href = "/";
-		});
-	}
+    const updateRecord = async (event) => {
+        event.preventDefault();
+        try {
+            const response = await fetch(`/api/records`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(product)
+            });
+            const data = await response.json();
+            if (response.ok) {
+                alert('Produsul a fost actualizat cu succes!');
+            } else {
+                throw new Error(data.message || "Eroare la actualizarea produsului.");
+            }
+        } catch (error) {
+            console.error('A apărut o eroare:', error);
+            alert(error.message);
+        }
+    };
+
+    if (!product) {
+        return <div>Loading...</div>; // Arată loading până când datele sunt disponibile
+    }
+    return (
 
 
-
-	return (
-
-
-		<section className="bg-white dark:bg-crem flex items-stretch bg-grey-lighter min-h-screen">
+		<section className="bg-white dark:bg-crem flex items-stretch bg-grey-lighter min-h-screen" style={{
+            backgroundImage: "url('SIMPRE-Cloud-Computing/public/img1.jpeg')",
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover'
+          }}>
 			<div className=" container px-8 py-10 mx-auto">
 				<p className="w-[1500px] mx-auto text-center font-bold italic mt-2 text-xl text-rose-600">
-					ADAUGA UN PRODUS NOU DIN DEPOZIT </p>
+					ACTUALIZARE PRODUS EXISTENT </p>
 				<br />
 				<div className="w-full">
 					<form className>
 						<div className="mb-6">
 							<label htmlFor="name" className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase">Denumire produs</label>
-							<input type="text" id="name"
+							<input type="text" id="denumire"  value={product.denumire} onChange={handleChange}
 								className="bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
 							   block w-full p-2.5 dark:bg-gray-400 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 								placeholder="Chio Chips" required />
@@ -66,7 +73,7 @@ export default function InsertPage() {
 						<div className="mb-6">
 							<label htmlFor="category"
 								className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase">Categorie produs</label>
-							<input type="text" id="category"
+							<input type="text" id="categorie" value={product.categorie} onChange={handleChange}
 								className="bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
 								block w-full p-2.5 dark:bg-gray-400 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 								required />
@@ -91,12 +98,12 @@ export default function InsertPage() {
 										<div className="first-division">
 											<input
 												name="expirationDate"
-												type="text"
-												id="expirationDate"
+												type="text"  
+												id="date_expirare"
 												class="bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
 												block w-full p-2.5 dark:bg-gray-400 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-												value={singleDate.expirationDate}
-												onChange={(e) => handleDateChange(e, index)}
+												value={product.date_expirare} 
+												onChange={handleChange}
 												required
 											/>
 										</div>
@@ -125,7 +132,7 @@ export default function InsertPage() {
 						<div className="mb-6">
 							<label htmlFor="price"
 								className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase">Pret produs</label>
-							<input id="price"
+							<input id="pret" value={product.pret} onChange={handleChange}
 								className="bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
 								block w-full p-2.5 dark:bg-gray-400 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 								required />
@@ -133,13 +140,13 @@ export default function InsertPage() {
 						<div className="mb-6">
 							<label htmlFor="image"
 								className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase">Link imagine produs</label>
-							<input type="text" id="image"
+							<input type="text" id="link_imagine" value={product.link_imagine} onChange={handleChange}
 								className="bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
 								block w-full p-2.5 dark:bg-gray-400 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 								required />
 						</div>
 						<button type="submit"
-							onClick={insertRecord}
+							onClick={updateRecord}
 							className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 
 							focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 
 							dark:focus:ring-red-900">Submit

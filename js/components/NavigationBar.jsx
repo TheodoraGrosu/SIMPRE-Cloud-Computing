@@ -19,7 +19,7 @@ export default function Navbar() {
                  <div className="z-50 flex relative w-8 h-8 flex-col justify-between items-center md:hidden" onClick={() => {
                     setOpen(!open)
                 }}>
-                    {/* hamburger button */}
+                    {}
                     <span className={`h-1 w-full bg-black rounded-lg transform transition duration-300 ease-in-out ${open ? "rotate-45 translate-y-3.5" : ""}`} />
                     <span className={`h-1 w-full bg-black rounded-lg transition-all duration-300 ease-in-out ${open ? "w-0" : "w-full"}`} />
                     <span className={`h-1 w-full bg-black rounded-lg transform transition duration-300 ease-in-out ${open ? "-rotate-45 -translate-y-3.5" : ""}`} />
@@ -36,11 +36,6 @@ export default function Navbar() {
                      ADAUGA PRODUS
                     </NavLink>
                     </div>
-                    {/* <div className="pb-2 text-white-600 font-bold hover:bg-purple-600  border-purple-900  md:hover:text-rose-600 md:hover:bg-transparent">
-                    <NavLink to="/chat">
-                        CHAT
-                    </NavLink>
-                    </div> */}
                 </div>
             </div>
         </nav>

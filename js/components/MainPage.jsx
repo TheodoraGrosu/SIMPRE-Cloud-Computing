@@ -1,10 +1,15 @@
 // js/components/MainPage.jsx
+import Link from "next/link";
 import { useEffect, useState } from "react";
+import {HiPencilAlt} from "react-icons/hi";
+import { HiOutlineTrash } from "react-icons/hi";
 
 
 
 export default function MainPage() {
 	const [records, setRecords] = useState([]);
+ 
+
 
 	useEffect(() => {
 		try {
@@ -35,6 +40,7 @@ export default function MainPage() {
 			console.log(error);
 		}
 	}	
+
 	
 
 	return (
@@ -63,12 +69,18 @@ export default function MainPage() {
                                     <span className="text-center font-bold text-white dark:text-white"> {record.pret}</span>
                                 </div>
                                 <strong>Date de expirare:</strong>
-                                {record.date_expirare.split(',').map((date, idx) => (
+                                {record.date_expirare.split(',').map((date, idx) => (	
                                     <p key={idx} className="text-sm">{date.trim()}</p>
                                 ))}
-                                <button type="button" onClick={() => deleteRecord(record._id)} className="mt-4 w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
-                                    DELETE
+                                <div className="flex justify-center items-center">
+                                <button type="button" onClick={() => deleteRecord(record._id)} className="text-red-200 border border-gray-300 p-2 rounded-lg m-2 hover:border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                                    <HiOutlineTrash size={24}/>
                                 </button>
+								<Link href={`/pageEdit/${record._id}`} className="border border-gray-300 p-2 rounded-lg m-2 hover:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent flex items-center justify-center">
+                                    <HiPencilAlt size={24}/>
+                                </Link>
+                                </div>
+
                             </div>
                         </div>
                     ))}
