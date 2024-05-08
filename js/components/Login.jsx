@@ -10,7 +10,7 @@ const Login = () => {
     const router = useRouter();
 
     useEffect(() => {
-        const auth = getAuth(app);
+        const auth = getAuth();
         const unsubscribe = auth.onAuthStateChanged((newUser) => {
             if (newUser) {
                router.push("/mainPageContainer"); 
@@ -23,7 +23,7 @@ const Login = () => {
     }, [router]);
 
     const signInWithGoogle = async () => {
-        const auth = getAuth(app);
+        const auth = getAuth();
         const provider = new GoogleAuthProvider();
         try {
             await signInWithPopup(auth, provider);
