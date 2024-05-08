@@ -11,7 +11,7 @@ export default function EditPage({productId}) {
             if (!productId) return;
             const response = await fetch(`/api/records?id=${productId}`);
             const data = await response.json();
-            setProduct(data.data);  // Important! Accesează `data.data` pentru a seta produsul
+            setProduct(data.data); 
         }
 
         fetchProduct();
@@ -46,7 +46,7 @@ export default function EditPage({productId}) {
     };
 
     if (!product) {
-        return <div>Loading...</div>; // Arată loading până când datele sunt disponibile
+        return <div>Loading...</div>; 
     }
     return (
 

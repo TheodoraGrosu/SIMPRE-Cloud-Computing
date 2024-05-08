@@ -5,7 +5,6 @@ import {HiPencilAlt} from "react-icons/hi";
 import { HiOutlineTrash } from "react-icons/hi";
 
 
-
 export default function MainPage() {
 	const [records, setRecords] = useState([]);
  
@@ -44,6 +43,7 @@ export default function MainPage() {
 	
 
 	return (
+       
 	<section className="bg-white dark:bg-crem flex items-stretch bg-grey-lighter min-h-screen">
     <div className="container px-1 py-10 mx-auto divide-y divide-gray-200 dark:divide-gray-700">
         <p className="w-[1500px] mx-auto text-center mt-2 text-3xl font-bold italic text-rose-600">
@@ -89,6 +89,7 @@ export default function MainPage() {
         </div>
     </div>
 </section>
+
 
 	)
 }

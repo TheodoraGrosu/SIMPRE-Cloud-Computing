@@ -50,7 +50,7 @@ export default function InsertPage() {
 
 
 		<section className="bg-white dark:bg-crem flex items-stretch bg-grey-lighter min-h-screen">
-			<div className=" container px-8 py-10 mx-auto">
+			<div className=" container px-8 py-10 mx-auto" >
 				<p className="w-[1500px] mx-auto text-center font-bold italic mt-2 text-xl text-rose-600">
 					ADAUGA UN PRODUS NOU DIN DEPOZIT </p>
 				<br />
