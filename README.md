@@ -115,6 +115,6 @@ Proiectul "Stock Fresh" are ca scop eficientizarea și optimizarea gestionării 
  3. Firebase - conectarea folosind conturile personale de Google.
 
 ### Link GitHub : https://github.com/TheodoraGrosu/SIMPRE-Cloud-Computing
-### Link aplicație publica : https://simpre-cloud-computing-37ies7s8t-teodoras-projects-37fcc608.vercel.app/
+### Link aplicație publica : https://simpre-cloud-computing-4915nwlrt-teodoras-projects-37fcc608.vercel.app/
 ### Link video prezentare YouTube : 
 
