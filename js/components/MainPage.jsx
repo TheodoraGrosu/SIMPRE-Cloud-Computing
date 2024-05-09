@@ -4,59 +4,74 @@ import { useEffect, useState } from "react";
 import {HiPencilAlt} from "react-icons/hi";
 import { HiOutlineTrash } from "react-icons/hi";
 
-
 export default function MainPage() {
-	const [records, setRecords] = useState([]);
- 
+    const [records, setRecords] = useState([]);
+    const [filteredRecords, setFilteredRecords] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [activeCategory, setActiveCategory] = useState('Toate');
 
+    useEffect(() => {
+        fetch('/api/records', {
+            method: 'GET',
+        })
+        .then(response => response.json())
+        .then(json => {
+            setRecords(json.data);
+            setFilteredRecords(json.data);
+            extractCategories(json.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }, []);
 
-	useEffect(() => {
-		try {
-			fetch('/api/records', {
-				method: 'GET',
-			})
-				.then(response => response.json())
-				.then(json => setRecords(json.data));
+    const extractCategories = (records) => {
+        const uniqueCategories = ['Toate', ...new Set(records.map(record => record.categorie))];
+        setCategories(uniqueCategories);
+    };
 
-		}
+    const filterByCategory = (category) => {
+        setActiveCategory(category);
+        if (category === 'Toate') {
+            setFilteredRecords(records);
+        } else {
+            setFilteredRecords(records.filter(record => record.categorie === category));
+        }
+    };
 
-		catch (error) {
-			console.log(error);
-		}
-	}, []);
+    const deleteRecord = (id) => {
+        fetch(`/api/records?id=${id}`, {
+            method: 'DELETE',
+        })
+        .then(response => response.json())
+        .then(() => {
+            setRecords(records.filter(record => record._id !== id));
+            filterByCategory(activeCategory);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    };
 
-	const deleteRecord = (id) => {
-		try {
-			fetch(`/api/records?id=${id}`, {
-				method: 'DELETE',
-			})
-			.then(response => response.json())
-			.then(json => {
-				setRecords(records.filter(record => record._id !== id));
-			});
-		}
-		catch (error) {
-			console.log(error);
-		}
-	}	
-
-	
-
-	return (
-       
-	<section className="bg-white dark:bg-crem flex items-stretch bg-grey-lighter min-h-screen">
-    <div className="container px-1 py-10 mx-auto divide-y divide-gray-200 dark:divide-gray-700">
-        <p className="w-[1500px] mx-auto text-center mt-2 text-3xl font-bold italic text-rose-600">
-            Stocul bine gestionat este temelia succesului in retail, transformand haosul in profit💰
-        </p>
-        <br />
-		<br/>
-        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-1 lg:gap-4">
-            <div className="container mx-auto px-4">
-                <div className="grid grid-cols-3 gap-4">
-                    {records.map((record) => (
-                        <div key={record._id} className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-mint dark:hover:bg-purple">
-                            <img className="w-full object-cover rounded-t-lg md:rounded-none md:rounded-l-lg" src={record.link_imagine ? record.link_imagine : "default-image-url"} alt="Product Image" />
+    return (
+        <section className="bg-white dark:bg-crem flex items-stretch bg-grey-lighter min-h-screen">
+            <div className="container px-1 py-10 mx-auto divide-y divide-gray-200 dark:divide-gray-700">
+                <p className="w-[1500px] mx-auto text-center mt-2 text-3xl font-bold italic text-rose-600">
+                    Stocul bine gestionat este temelia succesului in retail, transformand haosul in profit💰
+                </p>
+                <div>
+                    {categories.map(category => (
+                        <button key={category} onClick={() => filterByCategory(category)} className={`m-2 p-2 rounded-lg ${activeCategory === category ? 'bg-pink-500 text-white' : 'bg-pink-200'}`}>
+                            {category}
+                        </button>
+                    ))}
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-1 lg:gap-4">
+                    <div className="container mx-auto px-4">
+                        <div className="grid grid-cols-3 gap-4">
+                            {filteredRecords.map((record) => (
+                                <div key={record._id} className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-mint dark:hover:bg-purple">
+                                     <img className="w-full object-cover rounded-t-lg md:rounded-none md:rounded-l-lg" src={record.link_imagine ? record.link_imagine : "default-image-url"} alt="Product Image" />
                             <div className="p-10">
                                 <h5 className="text-center text-xl font-bold italic text-gray-900 dark:text-white">{record.denumire}</h5>
                                 <div className="flex items-center justify-center my-3">
@@ -82,14 +97,12 @@ export default function MainPage() {
                                 </div>
 
                             </div>
+                                </div>
+                            ))}
                         </div>
-                    ))}
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
-
-
-	)
+        </section>
+    );
 }

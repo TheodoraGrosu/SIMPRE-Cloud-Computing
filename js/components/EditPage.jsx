@@ -36,6 +36,7 @@ export default function EditPage({productId}) {
             const data = await response.json();
             if (response.ok) {
                 alert('Produsul a fost actualizat cu succes!');
+				window.location.href = "/mainPageContainer";
             } else {
                 throw new Error(data.message || "Eroare la actualizarea produsului.");
             }
@@ -44,6 +45,7 @@ export default function EditPage({productId}) {
             alert(error.message);
         }
     };
+
 
     if (!product) {
         return <div>Loading...</div>; 

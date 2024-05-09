@@ -27,7 +27,7 @@ export default function Navbar() {
 
                 <div className="hidden md:flex ">
                   <div className="pb-2 text-white-600 font-bold hover:bg-purple-600  border-purple-900  md:hover:text-rose-600 md:hover:bg-transparent">
-                    <NavLink to="/" >
+                    <NavLink to="/mainPageContainer" >
                     PRODUSE
                     </NavLink>
                     </div>

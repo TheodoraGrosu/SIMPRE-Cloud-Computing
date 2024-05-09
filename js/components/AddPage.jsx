@@ -21,9 +21,25 @@ export default function InsertPage() {
 	const insertRecord = (event) => {
 		event.preventDefault();
 		const denumire = document.getElementById("name").value;
+		if (denumire.trim() === "") {
+			alert("Vă rugăm să completați câmpul 'Denumire produs'.");
+			return;
+		}
 		const categorie = document.getElementById("category").value;
-		var date_expirare = document.getElementById("expirationDate").value;;
+		if (categorie.trim() === "") {
+			alert("Vă rugăm să completați câmpul 'Categorie produs'.");
+			return;
+		}
+		var date_expirare = document.getElementById("expirationDate").value;
+		if (date_expirare.trim() === "") {
+			alert("Vă rugăm să completați câmpul 'Date expirare & cantitate produse'.");
+			return;
+		}
 		const pret = document.getElementById("price").value;
+		if (pret.trim() === "") {
+			alert("Vă rugăm să completați câmpul 'Pret produs'.");
+			return;
+		}
 		const link_imagine = document.getElementById("image").value;
 		for (let i = 1; i < expirationDateList.length; i++) {
 			date_expirare += "," + expirationDateList[i].expirationDate;
@@ -40,7 +56,7 @@ export default function InsertPage() {
 			body: JSON.stringify(data),
 		}).then(() => {
 		   
-			window.location.href = "/";
+			window.location.href = "/mainPageContainer";
 		});
 	}
 
