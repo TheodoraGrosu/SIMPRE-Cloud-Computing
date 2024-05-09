@@ -67,7 +67,7 @@ export default function EditPage({productId}) {
 					<form className>
 						<div className="mb-6">
 							<label htmlFor="name" className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase">Denumire produs</label>
-							<input type="text" id="denumire"  value={product.denumire} onChange={handleChange}
+							<input type="text" id="denumire"  value={product.denumire} onChange={handleChange} readOnly={true}
 								className="bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
 							   block w-full p-2.5 dark:bg-gray-400 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 								placeholder="Chio Chips" required />
@@ -75,7 +75,7 @@ export default function EditPage({productId}) {
 						<div className="mb-6">
 							<label htmlFor="category"
 								className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase">Categorie produs</label>
-							<input type="text" id="categorie" value={product.categorie} onChange={handleChange}
+							<input type="text" id="categorie" value={product.categorie} onChange={handleChange} readOnly={true}
 								className="bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
 								block w-full p-2.5 dark:bg-gray-400 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 								required />
