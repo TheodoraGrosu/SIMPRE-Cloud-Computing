@@ -2,7 +2,7 @@
 ###### Studenta:  Grosu Teodora-Cătălina, SIMPRE ~ grupa 1132 
 ###### Link GitHub : https://github.com/TheodoraGrosu/SIMPRE-Cloud-Computing
 ###### Link aplicație publica : https://simpre-cloud-computing-4915nwlrt-teodoras-projects-37fcc608.vercel.app/
-###### Link video prezentare YouTube : 
+###### Link video prezentare YouTube : https://www.youtube.com/watch?v=bkSGeWZ4TUI
 
   ##  1. Introducere:
    Aplicația "Stock Fresh", dezvoltată pe platforma Next.js, este o soluție inovatoare pentru managerii și angajații magazinelor cu un sortiment extins de produse. În condițiile unui inventar vast, este foarte greu pentru comercianți să  gestioneze eficient stocurile și să verifice constant datele de expirare ale produselor. "Stock Fresh" vine în spijinul acestora, asigurând monitorizarea expirării produselor și optimizarea gestionării inventarului, facilitând astfel menținerea unui flux constant de produse în termen și disponibile pentru clienți, asigurând totodată și un proces de vânzare și gestionare al produselor cât mai fluent și mai precis.
